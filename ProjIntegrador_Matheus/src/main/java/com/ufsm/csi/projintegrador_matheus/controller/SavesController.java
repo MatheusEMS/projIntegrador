@@ -1,7 +1,6 @@
 package com.ufsm.csi.projintegrador_matheus.controller;
 
 import com.ufsm.csi.projintegrador_matheus.dao.SavesDao;
-import com.ufsm.csi.projintegrador_matheus.model.Jogos;
 import com.ufsm.csi.projintegrador_matheus.model.Saves;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,5 +41,6 @@ public class SavesController {
             return save1;
         }
     }
+
 
 }

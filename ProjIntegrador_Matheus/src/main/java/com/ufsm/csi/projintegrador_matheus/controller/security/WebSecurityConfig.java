@@ -65,8 +65,12 @@ public class WebSecurityConfig{
                         .requestMatchers(HttpMethod.GET,"/conta/pegarConta/{id}").hasAnyAuthority("ADMIN","USER")
                         .requestMatchers(HttpMethod.GET,"/saves/LerSaves/{id}/{console}").permitAll()
                         .requestMatchers(HttpMethod.GET,"/saves/PegarSave/{save}").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/requisicao/LerRequisicoes").hasAnyAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET,"/requisicao/deletar/{id}").hasAnyAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET,"/jogos/Lerjogos/{console}").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/upload/CadastrarJogo").hasAnyAuthority("ADMIN")
                         .requestMatchers(HttpMethod.POST,"/upload/CadastrarSave").hasAnyAuthority("ADMIN","USER")
+                        .requestMatchers(HttpMethod.POST,"/upload/CadastrarImagem").hasAnyAuthority("ADMIN","USER")
                         .anyRequest().denyAll();
 
                 //authenticationProvider(this.authenticationProvider()).authorizeRequests()

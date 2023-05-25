@@ -1,11 +1,8 @@
 package com.ufsm.csi.projintegrador_matheus.model;
-import org.springframework.util.MultiValueMap;
-
-
-import java.io.File;
+//ver se é esse
 import java.sql.Date;
 
-public class Saves {
+public class SavesReq {
     private int id_save;
     private String descricao;
     private String Resumo;
@@ -16,6 +13,34 @@ public class Saves {
     private String requisicao_nomeJogo;
     private int idUsuario;
     private int idJogo;
+    private String nomeJogo;
+    private String nomeUsuario;
+    private String nomeConsole;
+
+
+    public String getNomeJogo() {
+        return nomeJogo;
+    }
+
+    public void setNomeJogo(String nomeJogo) {
+        this.nomeJogo = nomeJogo;
+    }
+
+    public String getNomeUsuario() {
+        return nomeUsuario;
+    }
+
+    public void setNomeUsuario(String nomeUsuario) {
+        this.nomeUsuario = nomeUsuario;
+    }
+
+    public String getNomeConsole() {
+        return nomeConsole;
+    }
+
+    public void setNomeConsole(String nomeConsole) {
+        this.nomeConsole = nomeConsole;
+    }
 
     public int getIdConsole() {
         return idConsole;

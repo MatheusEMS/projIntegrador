@@ -3,6 +3,7 @@ package com.ufsm.csi.projintegrador_matheus.dao;
 
 import com.ufsm.csi.projintegrador_matheus.model.Jogos;
 import com.ufsm.csi.projintegrador_matheus.model.Saves;
+import com.ufsm.csi.projintegrador_matheus.model.SavesReq;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -167,5 +168,68 @@ public class SavesDao {
             return true;
         }
         return false;
+    }
+
+    public ArrayList<SavesReq> LerReqSaves() {
+        ArrayList<SavesReq>ListaSaves = new ArrayList<>();
+
+        try (Connection connection = new ConexaoBD().getConexao()){
+            this.sql = "SELECT arquivos_save.*, console.nome_console, jogos.nome_jogo,usuario.nome\n" +
+                    "FROM arquivos_save,console,jogos,usuario\n" +
+                    "WHERE habilitado = 'false'\n" +
+                    "AND arquivos_save.idjogo = jogos.id_jogo\n" +
+                    "AND arquivos_save.idconsole = console.id_console\n" +
+                    "AND arquivos_save.idusuario = usuario.id\n" +
+                    "ORDER BY data_hora ASC";
+
+            this.statement = connection.createStatement();
+            this.resultSet = this.statement.executeQuery(this.sql);
+
+            while (resultSet.next()){
+                SavesReq saves = new SavesReq();
+                saves.setId_save(resultSet.getInt("id_save"));
+                saves.setResumo(resultSet.getString("resumo").toUpperCase());
+                saves.setDescricao(resultSet.getString("descricao").toUpperCase());
+                saves.setEmuladores(resultSet.getString("emuladores").toUpperCase());
+                saves.setArquivo(" ");
+                //saves.setArquivo(resultSet.getString("arquivo").toUpperCase());
+                saves.setHabilitado(resultSet.getString("habilitado").toUpperCase());
+                saves.setData_Hora(resultSet.getDate("data_Hora"));
+                saves.setIdJogo(resultSet.getInt("idjogo"));
+                saves.setIdConsole(resultSet.getInt("idConsole"));
+                saves.setIdUsuario(resultSet.getInt("idusuario"));
+                saves.setRequisicao_nomeJogo(resultSet.getString("requisicao_nomejogo"));
+                saves.setNomeConsole(resultSet.getString("nome_console"));
+                saves.setNomeJogo(resultSet.getString("nome_jogo"));
+                saves.setNomeUsuario(resultSet.getString("nome"));
+
+                System.out.println("id:"+ saves.getId_save()+" descricao: "+saves.getDescricao());
+
+                ListaSaves.add(saves);
+            }
+        }catch (
+                SQLException e){
+            e.printStackTrace();
+            System.out.println("erro no dao");
+        }
+        return ListaSaves;
+
+    }
+
+    public Boolean DeletarReqSaves(int id){
+        try (Connection connection = new ConexaoBD().getConexao()){
+            this.sql = "Delete from arquivos_save where id_save = ?";
+            this.preparedStatement = connection.prepareStatement(this.sql);
+            this.preparedStatement.setInt(1,id);
+            preparedStatement.execute();
+
+            System.out.println(this.sql);
+
+        }catch (SQLException e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }
